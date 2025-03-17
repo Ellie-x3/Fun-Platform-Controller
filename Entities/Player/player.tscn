@@ -1,21 +1,29 @@
-[gd_scene load_steps=9 format=3 uid="uid://commmvf55q32l"]
+[gd_scene load_steps=12 format=3 uid="uid://commmvf55q32l"]
 
-[ext_resource type="Texture2D" uid="uid://tg4534lwtu8k" path="res://Assets/Player/Sprite-0001.png" id="1_ihjej"]
-[ext_resource type="Script" path="res://Entities/Player/player.gd" id="1_vomdv"]
-[ext_resource type="Script" path="res://Components/state_machine.gd" id="2_6srdj"]
-[ext_resource type="Script" path="res://Components/velocity.gd" id="2_oan8w"]
-[ext_resource type="Script" path="res://Entities/Player/states/idle.gd" id="3_tc0yl"]
-[ext_resource type="Script" path="res://Entities/Player/movement.gd" id="4_tyfqx"]
-[ext_resource type="Script" path="res://Entities/Player/states/walk.gd" id="7_xlrik"]
+[ext_resource type="Script" uid="uid://30qx7qaaj3nw" path="res://Entities/Player/player.gd" id="1_vomdv"]
+[ext_resource type="Script" uid="uid://bmmg027kbo3vy" path="res://Components/state_machine.gd" id="2_6srdj"]
+[ext_resource type="Script" uid="uid://c2n4m3mq65q47" path="res://Components/velocity.gd" id="2_oan8w"]
+[ext_resource type="Script" uid="uid://lafxp4ty2uyw" path="res://Addons/smoothing/smoothing_2d.gd" id="2_wjcm0"]
+[ext_resource type="Texture2D" uid="uid://bk2bq6a75grec" path="res://Assets/Player/Sprite-0002.png" id="3_bpvvt"]
+[ext_resource type="Script" uid="uid://c5304exos6s" path="res://Entities/Player/states/idle.gd" id="3_tc0yl"]
+[ext_resource type="Script" uid="uid://v5juvwpeksn6" path="res://Entities/Player/movement.gd" id="4_tyfqx"]
+[ext_resource type="Script" uid="uid://c6hhylxrbn2pm" path="res://Components/gravity.gd" id="6_wjnfq"]
+[ext_resource type="Script" uid="uid://dwu6e2ph8war4" path="res://Entities/Player/states/walk.gd" id="7_xlrik"]
+[ext_resource type="Script" uid="uid://nr4q4uv4w513" path="res://Entities/Player/states/jump.gd" id="10_53525"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yp80j"]
-size = Vector2(16, 32)
+size = Vector2(14, 24)
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 2
 script = ExtResource("1_vomdv")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_ihjej")
+[node name="Smoothing2D" type="Node2D" parent="."]
+script = ExtResource("2_wjcm0")
+target = NodePath("..")
+
+[node name="Sprite2D" type="Sprite2D" parent="Smoothing2D"]
+texture = ExtResource("3_bpvvt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_yp80j")
@@ -26,10 +34,16 @@ debug_color = Color(0.704041, 0.364581, 0.832026, 0.42)
 [node name="Velocity" type="Node" parent="Components"]
 unique_name_in_owner = true
 script = ExtResource("2_oan8w")
+max_speed = 175.0
 
 [node name="Movement" type="Node" parent="Components"]
 unique_name_in_owner = true
 script = ExtResource("4_tyfqx")
+
+[node name="Gravity" type="Node" parent="Components" node_paths=PackedStringArray("velocity_component")]
+unique_name_in_owner = true
+script = ExtResource("6_wjnfq")
+velocity_component = NodePath("../Velocity")
 
 [node name="StateMachine" type="Node" parent="."]
 unique_name_in_owner = true
@@ -41,3 +55,6 @@ script = ExtResource("3_tc0yl")
 
 [node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("7_xlrik")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("10_53525")

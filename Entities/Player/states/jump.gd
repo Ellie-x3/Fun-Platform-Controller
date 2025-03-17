@@ -1,8 +1,10 @@
-class_name Walk
+class_name Jump
 extends PlayerState
 
 func _enter(_msg: Dictionary={}) -> void:
-	pass
+	player.velocity.x = 0.0
+	player.velocity_component.set_jump_velocity(-325.0)
+	player.gravity_component.fall_multiplier = 1.25
 
 func _update(_delta: float) -> void:
 	pass
@@ -10,15 +12,18 @@ func _update(_delta: float) -> void:
 func _fixed_update(_delta: float) -> void:
 	var move_input: Vector2 = player.movement_component.move_input
 	player.velocity_component.set_horizontal_velocity(move_input.x)
+
+	if not player.is_on_floor():
+		pass
+
 	player.velocity_component.move(player)
 
 func _handle_input(_event: InputEvent) -> void:
-	if _event.is_action_pressed("Jump"):
-		state_machine.transition("Jump")
+	pass
 
 func _exit() -> void:
-	player.velocity_component.set_horizontal_velocity(0)
+	pass
 
 func _transition_check() -> void:
-	if player.movement_component.move_input == Vector2.ZERO:
-		state_machine.transition("Idle")
+	if player.is_on_floor():
+		player.state_machine.transition("Idle")

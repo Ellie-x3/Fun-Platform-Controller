@@ -1,3 +1,24 @@
-[gd_scene format=3 uid="uid://cd6nkmttjhuyw"]
+[gd_scene load_steps=5 format=4 uid="uid://cd6nkmttjhuyw"]
+
+[ext_resource type="PackedScene" uid="uid://commmvf55q32l" path="res://Entities/Player/player.tscn" id="1_um70m"]
+[ext_resource type="Texture2D" uid="uid://h43a5bdcwavt" path="res://Assets/Level/graybox.png" id="2_raars"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lrcfx"]
+texture = ExtResource("2_raars")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+
+[sub_resource type="TileSet" id="TileSet_fp4ey"]
+tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 2
+sources/0 = SubResource("TileSetAtlasSource_lrcfx")
 
 [node name="Level_00" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAAABUAAAAAAAAAAAABABUAAAAAAAAAAAACABUAAAAAAAAAAAADABUAAAAAAAAAAAAEABUAAAAAAAAAAAAFABUAAAAAAAAAAAAGABUAAAAAAAAAAAAHABUAAAAAAAAAAAAIABUAAAAAAAAAAAAJABUAAAAAAAAAAAAKABUAAAAAAAAAAAALABUAAAAAAAAAAAAMABUAAAAAAAAAAAANABUAAAAAAAAAAAAOABUAAAAAAAAAAAAPABUAAAAAAAAAAAAQABUAAAAAAAAAAAARABUAAAAAAAAAAAASABUAAAAAAAAAAAATABUAAAAAAAAAAAAUABUAAAAAAAAAAAAVABUAAAAAAAAAAAAWABUAAAAAAAAAAAAXABUAAAAAAAAAAAAYABUAAAAAAAAAAAAZABUAAAAAAAAAAAAaABUAAAAAAAAAAAAbABUAAAAAAAAAAAAcABUAAAAAAAAAAAAdABUAAAAAAAAAAAAeABUAAAAAAAAAAAAfABUAAAAAAAAAAAAgABUAAAAAAAAAAAAhABUAAAAAAAAAAAAiABUAAAAAAAAAAAAjABUAAAAAAAAAAAAkABUAAAAAAAAAAAAlABUAAAAAAAAAAAAmABUAAAAAAAAAAAAnABUAAAAAAAAAAAAWABMAAAAAAAAAAAAXABMAAAAAAAAAAAAYABMAAAAAAAAAAAAZABMAAAAAAAAAAAAaABMAAAAAAAAAAAAdABEAAAAAAAAAAAAeABEAAAAAAAAAAAAfABEAAAAAAAAAAAAgABEAAAAAAAAAAAAhABEAAAAAAAAAAAAiABEAAAAAAAAAAAAnABQAAAAAAAAAAAAAABQAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_fp4ey")
+
+[node name="Player" parent="." instance=ExtResource("1_um70m")]
+position = Vector2(143, 105)
